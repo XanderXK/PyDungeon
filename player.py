@@ -1,7 +1,6 @@
 import math
 import pygame
 from pygame import SurfaceType
-
 import settings
 
 
