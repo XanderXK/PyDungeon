@@ -1,5 +1,5 @@
 import pygame
-import image_helper
+import animation_creator
 import settings
 from player import Player
 
@@ -9,13 +9,8 @@ pygame.display.set_caption("PyDungeon")
 screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
-player_animations = []
-for item in range(4):
-    img = pygame.image.load(f"images/player/player_{item}.png").convert_alpha()
-    img = image_helper.scale_image(img, settings.SCALE)
-    player_animations.append(img)
+player = Player(settings.PLAYER_START_POSITION)
 
-player = Player(200, 200, player_animations)
 input_x = 0
 input_y = 0
 
