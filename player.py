@@ -1,7 +1,6 @@
 import math
 import pygame
 from pygame import SurfaceType
-import animation
 import animation_creator
 import settings
 
@@ -27,10 +26,10 @@ class Player:
             input_x = input_x * (math.sqrt(2) / 2)
             input_y = input_y * (math.sqrt(2) / 2)
 
-        if input_x + input_y > 0:
-            self.current_anim_frame = self.run_animation.get_frame()
-        else:
+        if input_y + input_x == 0:
             self.current_anim_frame = self.idle_animation.get_frame()
+        else:
+            self.current_anim_frame = self.run_animation.get_frame()
 
         if input_x > 0:
             self.is_flipped = False

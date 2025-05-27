@@ -2,6 +2,7 @@ import pygame
 import animation_creator
 import settings
 from player import Player
+from weapon import Weapon
 
 pygame.init()
 pygame.display.set_caption("PyDungeon")
@@ -10,6 +11,7 @@ screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT)
 clock = pygame.time.Clock()
 
 player = Player(settings.PLAYER_START_POSITION)
+weapon= Weapon()
 
 input_x = 0
 input_y = 0
@@ -21,6 +23,9 @@ while run:
 
     player.move(input_x, input_y)
     player.draw(screen)
+
+    weapon.update(player)
+    weapon.draw(screen)
     pygame.display.update()
 
     for event in pygame.event.get():
