@@ -1,28 +1,56 @@
 import math
 
-import pygame.transform
-from pygame import SurfaceType
+from pygame.cursors import arrow
 
 import image_helper
 import settings
+import pygame.transform
+from pygame import SurfaceType
+from projectile import Projectile
 
 
 class Weapon:
-    def __init__(self):
+    projectile_group = pygame.sprite.Group()
+    cooldown = 150
+    last_cooldown_time = pygame.time.get_ticks()
+
+    def __init__(self, player):
+        self.player = player
         self.angle = 0
         self.weapon_image = image_helper.load_image("images/bow.png", settings.SCALE)
         self.rotated_image = pygame.transform.rotate(self.weapon_image, self.angle)
         self.rect = self.rotated_image.get_rect()
 
-    def update(self, player):
-        self.rect.center = player.rect.center
+    def update(self):
+        self.calculate_angle()
+        if pygame.mouse.get_pressed()[0] and pygame.time.get_ticks() - self.last_cooldown_time > self.cooldown:
+            self.shoot()
+        for item in self.projectile_group:
+            item.update()
+
+    def calculate_angle(self):
+        self.rect.center = self.player.rect.center
         mouse_pos = pygame.mouse.get_pos()
         x_distance = mouse_pos[0] - self.rect.centerx
         y_distance = -(mouse_pos[1] - self.rect.centery)
         self.angle = math.degrees(math.atan2(y_distance, x_distance))
+
+    def shoot(self):
+        spawn_pos = self.get_projectile_spawn_pos()
+        projectile = Projectile(spawn_pos[0], spawn_pos[1], self.angle)
+        self.projectile_group.add(projectile)
+        self.last_cooldown_time = pygame.time.get_ticks()
+
+    def get_projectile_spawn_pos(self):
+        x = self.rect.centerx + math.cos(math.radians(self.angle)) * 50
+        y = self.rect.centery + math.sin(math.radians(self.angle)) * -50
+        return x, y
 
     def draw(self, surface: SurfaceType):
         self.rotated_image = pygame.transform.rotate(self.weapon_image, self.angle)
         rect = (self.rect.centerx - int(self.rotated_image.get_width() / 2),
                 self.rect.centery - int(self.rotated_image.get_height() / 2))
         surface.blit(self.rotated_image, rect)
+        # self.projectile_group.draw(surface)
+        for item in self.projectile_group:
+            item.draw(surface)
