@@ -1,7 +1,5 @@
 import math
-
 import pygame.sprite
-
 import image_helper
 import settings
 
@@ -22,6 +20,12 @@ class Projectile(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.dx
         self.rect.y += self.dy
+
+        if (self.rect.right < 0
+                or self.rect.left > settings.SCREEN_WIDTH
+                or self.rect.bottom < 0
+                or self.rect.top > settings.SCREEN_HEIGHT):
+            self.kill()
 
     def draw(self, surface):
         rect = (self.rect.centerx - int(self.image.get_width() / 2),
