@@ -10,7 +10,7 @@ from weapon import Weapon
 
 class Player:
     is_flipped = False
-    anim_cooldown = 90
+    move_speed = 5
 
     def __init__(self, start_position):
         game_objects.objects_to_update.append(self)
@@ -21,11 +21,6 @@ class Player:
         self.run_animation = animation_creator.create_player_run()
         self.current_anim_frame = self.idle_animation.get_frame()
         Weapon(self)
-
-    def draw(self, surface: SurfaceType):
-        player_image = pygame.transform.flip(self.current_anim_frame, self.is_flipped, False)
-        surface.blit(player_image, self.rect)
-        pygame.draw.rect(surface, (255, 255, 255), self.rect, 1)
 
     def update(self):
         move_x = player_input.x
@@ -44,5 +39,10 @@ class Player:
         elif move_x < 0:
             self.is_flipped = True
 
-        self.rect.x += move_x * settings.PLAYER_SPEED
-        self.rect.y += move_y * settings.PLAYER_SPEED
+        self.rect.x += move_x * self.move_speed
+        self.rect.y += move_y * self.move_speed
+
+    def draw(self, screen: SurfaceType):
+        player_image = pygame.transform.flip(self.current_anim_frame, self.is_flipped, False)
+        screen.blit(player_image, self.rect)
+        # pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)

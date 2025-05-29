@@ -1,6 +1,7 @@
 import pygame
 import game_objects
 import player_input
+import screen_text
 import settings
 from player import Player
 from slime import Slime
@@ -14,7 +15,10 @@ clock = pygame.time.Clock()
 
 player = Player(settings.PLAYER_START_POSITION)
 
-slime_0 = Slime((500, 500))
+for i in range(5):
+    slime = Slime((500 + i * 100, 300 + i * 50))
+
+text = screen_text.ScreenText("PyDungeon", (100, 35))
 
 run = True
 while run:

@@ -36,8 +36,8 @@ class Projectile:
                 or self.rect.top > settings.SCREEN_HEIGHT):
             game_objects.remove_projectile(self)
 
-    def draw(self, surface):
+    def draw(self, screen):
         rect = (self.rect.centerx - int(self.image.get_width() / 2),
                 self.rect.centery - int(self.image.get_height() / 2))
-        surface.blit(self.image, rect)
-        # pygame.draw.rect(surface, (0, 0, 255), self.rect, 1)
+        screen.blit(self.image, rect)
+        # pygame.draw.rect(screen, (0, 0, 255), self.rect, 1)

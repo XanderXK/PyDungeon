@@ -12,10 +12,10 @@ class Slime:
         self.rect.center = start_position
         self.simple_animation = animation_creator.create_slime_animation()
 
-    def draw(self, surface: SurfaceType):
+    def draw(self, screen: SurfaceType):
         anim_frame = self.simple_animation.get_frame()
-        surface.blit(anim_frame, self.rect)
-        pygame.draw.rect(surface, (255, 255, 255), self.rect, 1)
+        screen.blit(anim_frame, self.rect)
+        # pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)
 
     def update(self):
         a = 0

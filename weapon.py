@@ -45,8 +45,8 @@ class Weapon:
         y = self.rect.centery + math.sin(math.radians(self.angle)) * -50
         return x, y
 
-    def draw(self, surface: SurfaceType):
+    def draw(self, screen: SurfaceType):
         self.rotated_image = pygame.transform.rotate(self.weapon_image, self.angle)
         rect = (self.rect.centerx - int(self.rotated_image.get_width() / 2),
                 self.rect.centery - int(self.rotated_image.get_height() / 2))
-        surface.blit(self.rotated_image, rect)
+        screen.blit(self.rotated_image, rect)
