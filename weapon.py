@@ -2,6 +2,7 @@ import math
 
 from pygame.cursors import arrow
 
+import game_objects
 import image_helper
 import settings
 import pygame.transform
@@ -10,11 +11,12 @@ from projectile import Projectile
 
 
 class Weapon:
-    projectile_group = pygame.sprite.Group()
     cooldown = 150
     last_cooldown_time = pygame.time.get_ticks()
 
     def __init__(self, player):
+        game_objects.objects_to_update.append(self)
+        game_objects.objects_to_draw.append(self)
         self.player = player
         self.angle = 0
         self.weapon_image = image_helper.load_image("images/bow.png", settings.SCALE)
@@ -25,8 +27,6 @@ class Weapon:
         self.calculate_angle()
         if pygame.mouse.get_pressed()[0] and pygame.time.get_ticks() - self.last_cooldown_time > self.cooldown:
             self.shoot()
-        for item in self.projectile_group:
-            item.update()
 
     def calculate_angle(self):
         self.rect.center = self.player.rect.center
@@ -37,8 +37,7 @@ class Weapon:
 
     def shoot(self):
         spawn_pos = self.get_projectile_spawn_pos()
-        projectile = Projectile(spawn_pos[0], spawn_pos[1], self.angle)
-        self.projectile_group.add(projectile)
+        Projectile(spawn_pos[0], spawn_pos[1], self.angle)
         self.last_cooldown_time = pygame.time.get_ticks()
 
     def get_projectile_spawn_pos(self):
@@ -51,6 +50,3 @@ class Weapon:
         rect = (self.rect.centerx - int(self.rotated_image.get_width() / 2),
                 self.rect.centery - int(self.rotated_image.get_height() / 2))
         surface.blit(self.rotated_image, rect)
-        # self.projectile_group.draw(surface)
-        for item in self.projectile_group:
-            item.draw(surface)

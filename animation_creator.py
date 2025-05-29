@@ -16,3 +16,10 @@ def create_player_run():
         img = image_helper.load_image(f"images/player_{item}.png", settings.SCALE)
         player_run_frames.append(img)
     return Animation(player_run_frames, 90)
+
+def create_slime_animation():
+    frames= []
+    for item in range(2):
+        img = image_helper.load_image(f"images/slime_{item}.png", settings.SCALE)
+        frames.append(img)
+    return Animation(frames, 150)

@@ -1,52 +1,52 @@
 import pygame
+import game_objects
+import player_input
 import settings
 from player import Player
+from slime import Slime
 from weapon import Weapon
-
 
 pygame.init()
 pygame.display.set_caption("PyDungeon")
 
-screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
+surface = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
 player = Player(settings.PLAYER_START_POSITION)
-weapon= Weapon(player)
 
-input_x = 0
-input_y = 0
+slime_0 = Slime((500, 500))
 
 run = True
 while run:
-    screen.fill(settings.BACKGROUND)
+    surface.fill(settings.BACKGROUND)
     clock.tick(settings.FPS)
 
-    player.move(input_x, input_y)
-    player.draw(screen)
+    for object_to_update in game_objects.objects_to_update:
+        object_to_update.update()
 
-    weapon.update()
-    weapon.draw(screen)
+    for object_to_draw in game_objects.objects_to_draw:
+        object_to_draw.draw(surface)
+
     pygame.display.update()
-
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
-                input_y = -1
+                player_input.y = -1
             if event.key == pygame.K_s:
-                input_y = 1
+                player_input.y = 1
             if event.key == pygame.K_a:
-                input_x = -1
+                player_input.x = -1
             if event.key == pygame.K_d:
-                input_x = 1
+                player_input.x = 1
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_w and input_y == -1:
-                input_y = 0
-            if event.key == pygame.K_s and input_y == 1:
-                input_y = 0
-            if event.key == pygame.K_a and input_x == -1:
-                input_x = 0
-            if event.key == pygame.K_d and input_x == 1:
-                input_x = 0
+            if event.key == pygame.K_w and player_input.y == -1:
+                player_input.y = 0
+            if event.key == pygame.K_s and player_input.y == 1:
+                player_input.y = 0
+            if event.key == pygame.K_a and player_input.x == -1:
+                player_input.x = 0
+            if event.key == pygame.K_d and player_input.x == 1:
+                player_input.x = 0
 
         if event.type == pygame.QUIT:
             run = False
