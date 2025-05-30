@@ -1,6 +1,5 @@
 import math
 import pygame.sprite
-
 import game_objects
 import image_helper
 import settings

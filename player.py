@@ -1,16 +1,18 @@
 import math
 import pygame
-from pygame import SurfaceType
 import animation_creator
 import game_objects
 import player_input
+import screen_text
 import settings
+from pygame import SurfaceType
 from weapon import Weapon
 
 
 class Player:
-    is_flipped = False
+    _is_flipped = False
     move_speed = 5
+    hp =5
 
     def __init__(self, start_position):
         game_objects.objects_to_update.append(self)
@@ -20,6 +22,7 @@ class Player:
         self.idle_animation = animation_creator.create_player_idle()
         self.run_animation = animation_creator.create_player_run()
         self.current_anim_frame = self.idle_animation.get_frame()
+        self.hp_text = screen_text.ScreenText(f"hp: {self.hp}", (50, settings.SCREEN_HEIGHT-35))
         Weapon(self)
 
     def update(self):
@@ -35,14 +38,14 @@ class Player:
             self.current_anim_frame = self.run_animation.get_frame()
 
         if move_x > 0:
-            self.is_flipped = False
+            self._is_flipped = False
         elif move_x < 0:
-            self.is_flipped = True
+            self._is_flipped = True
 
         self.rect.x += move_x * self.move_speed
         self.rect.y += move_y * self.move_speed
 
     def draw(self, screen: SurfaceType):
-        player_image = pygame.transform.flip(self.current_anim_frame, self.is_flipped, False)
+        player_image = pygame.transform.flip(self.current_anim_frame, self._is_flipped, False)
         screen.blit(player_image, self.rect)
         # pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)

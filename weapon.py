@@ -1,7 +1,4 @@
 import math
-
-from pygame.cursors import arrow
-
 import game_objects
 import image_helper
 import settings
