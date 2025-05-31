@@ -5,7 +5,7 @@ import screen_text
 import settings
 from player import Player
 from slime import Slime
-from weapon import Weapon
+from coin import Coin
 
 pygame.init()
 pygame.display.set_caption("PyDungeon")
@@ -16,7 +16,8 @@ clock = pygame.time.Clock()
 player = Player(settings.PLAYER_START_POSITION)
 
 for i in range(5):
-    slime = Slime((500 + i * 100, 300 + i * 50))
+    slime = Slime((500 + i * 100, 350 + i * 25))
+    coin = Coin((350 + 50 * i, 200 - i * 10))
 
 text = screen_text.ScreenText("PyDungeon", (100, 35))
 

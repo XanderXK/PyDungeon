@@ -11,19 +11,26 @@ from weapon import Weapon
 
 class Player:
     _is_flipped = False
+    _coins = 0
     move_speed = 5
-    hp =5
+    hp = 5
 
     def __init__(self, start_position):
         game_objects.objects_to_update.append(self)
         game_objects.objects_to_draw.append(self)
+        game_objects.player = self
         self.rect = pygame.Rect(0, 0, 50, 50)
         self.rect.center = start_position
         self.idle_animation = animation_creator.create_player_idle()
         self.run_animation = animation_creator.create_player_run()
         self.current_anim_frame = self.idle_animation.get_frame()
-        self.hp_text = screen_text.ScreenText(f"hp: {self.hp}", (50, settings.SCREEN_HEIGHT-35))
+        self.hp_text = screen_text.ScreenText(f"hp: {self.hp}", (50, settings.SCREEN_HEIGHT - 35))
+        self.coins_text = screen_text.ScreenText(f"coins: {self._coins}", (150, settings.SCREEN_HEIGHT - 35))
         Weapon(self)
+
+    def add_coins(self, amount):
+        self._coins += amount
+        self.coins_text.set_text(f"coins: {self._coins}")
 
     def update(self):
         move_x = player_input.x

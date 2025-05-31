@@ -1,5 +1,6 @@
 _projectiles = []
 slimes = []
+player = None
 
 objects_to_update=[]
 objects_to_draw=[]
