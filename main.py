@@ -1,11 +1,10 @@
 import pygame
 import game_objects
 import player_input
-import screen_text
 import settings
 from player import Player
 from slime import Slime
-from coin import Coin
+from spawner import Spawner
 
 pygame.init()
 pygame.display.set_caption("PyDungeon")
@@ -14,12 +13,11 @@ surface = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT
 clock = pygame.time.Clock()
 
 player = Player(settings.PLAYER_START_POSITION)
-
+spawner = Spawner(500, 5000)
 for i in range(5):
     slime = Slime((500 + i * 100, 350 + i * 25))
-    coin = Coin((350 + 50 * i, 200 - i * 10))
 
-text = screen_text.ScreenText("PyDungeon", (100, 35))
+
 
 run = True
 while run:

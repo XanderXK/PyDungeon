@@ -13,7 +13,8 @@ class Player:
     _is_flipped = False
     _coins = 0
     move_speed = 5
-    hp = 5
+    _hp = 5
+    _max_hp=10
 
     def __init__(self, start_position):
         game_objects.objects_to_update.append(self)
@@ -24,13 +25,15 @@ class Player:
         self.idle_animation = animation_creator.create_player_idle()
         self.run_animation = animation_creator.create_player_run()
         self.current_anim_frame = self.idle_animation.get_frame()
-        self.hp_text = screen_text.ScreenText(f"hp: {self.hp}", (50, settings.SCREEN_HEIGHT - 35))
-        self.coins_text = screen_text.ScreenText(f"coins: {self._coins}", (150, settings.SCREEN_HEIGHT - 35))
+        self.hp_text = screen_text.ScreenText(f"hp: {self._hp} / {self._max_hp}", (100, settings.SCREEN_HEIGHT - 35))
+        self.score_text = screen_text.ScreenText(f"score: {self._coins}", (250, settings.SCREEN_HEIGHT - 35))
         Weapon(self)
 
-    def add_coins(self, amount):
-        self._coins += amount
-        self.coins_text.set_text(f"coins: {self._coins}")
+    def add_hp(self, amount):
+        self._hp += amount
+        if self._hp> self._max_hp:
+            self._hp = self._max_hp
+        self.hp_text.set_text(f"hp: {self._hp} / {self._max_hp}")
 
     def update(self):
         move_x = player_input.x
@@ -49,8 +52,15 @@ class Player:
         elif move_x < 0:
             self._is_flipped = True
 
-        self.rect.x += move_x * self.move_speed
-        self.rect.y += move_y * self.move_speed
+        end_pos_x = self.rect.x + move_x * self.move_speed
+        end_pos_y = self.rect.y + move_y * self.move_speed
+        if end_pos_x > settings.SCREEN_WIDTH - 10 or end_pos_x < 10:
+            end_pos_x = self.rect.x
+        if end_pos_y > settings.SCREEN_HEIGHT - 100 or end_pos_y < 50:
+            end_pos_y = self.rect.y
+
+        self.rect.x = end_pos_x
+        self.rect.y = end_pos_y
 
     def draw(self, screen: SurfaceType):
         player_image = pygame.transform.flip(self.current_anim_frame, self._is_flipped, False)

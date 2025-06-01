@@ -1,10 +1,13 @@
+import math
+
 import pygame
 import animation_creator
 from pygame import SurfaceType
 import game_objects
 
 class Slime:
-    hp = 3
+    _hp = 3
+    _speed = 3
 
     def __init__(self, start_position):
         game_objects.add_slime(self)
@@ -15,12 +18,21 @@ class Slime:
     def draw(self, screen: SurfaceType):
         anim_frame = self.simple_animation.get_frame()
         screen.blit(anim_frame, self.rect)
-        # pygame.draw.rect(screen, (255, 255, 255), self.rect, 1)
 
     def update(self):
-        a = 0
+        self.move_to_player()
+
+    def move_to_player(self):
+        player_rect = game_objects.player.rect
+        x_distance = player_rect.centerx - self.rect.centerx
+        y_distance = -( player_rect.centery - self.rect.centery)
+        angle = math.degrees(math.atan2(y_distance, x_distance))
+        dx = math.cos(math.radians(angle)) * self._speed
+        dy = -math.sin(math.radians(angle)) * self._speed
+        self.rect.centerx += dx
+        self.rect.centery += dy
 
     def take_damage(self, damage):
-        self.hp -= damage
-        if self.hp <= 0:
+        self._hp -= damage
+        if self._hp <= 0:
             game_objects.remove_slime(self)
