@@ -39,4 +39,3 @@ class Projectile:
         rect = (self.rect.centerx - int(self.image.get_width() / 2),
                 self.rect.centery - int(self.image.get_height() / 2))
         screen.blit(self.image, rect)
-        # pygame.draw.rect(screen, (0, 0, 255), self.rect, 1)

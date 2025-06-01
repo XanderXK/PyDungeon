@@ -11,7 +11,7 @@ class ScreenText:
         self.rect = self.text_surface.get_rect()
         self.rect.center = position
 
-    def set_text(self,text):
+    def set_text(self, text):
         font = pygame.sysfont.SysFont("Arial", 32)
         self.text_surface = font.render(text, True, (255, 255, 255), (0, 0, 0))
 

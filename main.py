@@ -3,7 +3,6 @@ import game_objects
 import player_input
 import settings
 from player import Player
-from slime import Slime
 from spawner import Spawner
 
 pygame.init()
@@ -12,12 +11,8 @@ pygame.display.set_caption("PyDungeon")
 surface = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
-player = Player(settings.PLAYER_START_POSITION)
-spawner = Spawner(500, 5000)
-for i in range(5):
-    slime = Slime((500 + i * 100, 350 + i * 25))
-
-
+player = Player()
+spawner = Spawner()
 
 run = True
 while run:
@@ -31,6 +26,7 @@ while run:
         object_to_draw.draw(surface)
 
     pygame.display.update()
+
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:

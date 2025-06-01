@@ -8,7 +8,7 @@ from projectile import Projectile
 
 
 class Weapon:
-    cooldown = 150
+    cooldown = 125
     last_cooldown_time = pygame.time.get_ticks()
 
     def __init__(self, player):

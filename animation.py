@@ -2,7 +2,7 @@ import pygame.time
 
 
 class Animation:
-    current_frame_index=0
+    current_frame_index = 0
 
     def __init__(self, anim_frames, cooldown: float):
         self.anim_frames = anim_frames
@@ -16,5 +16,3 @@ class Animation:
             if self.current_frame_index >= len(self.anim_frames):
                 self.current_frame_index = 0
         return self.anim_frames[self.current_frame_index]
-
-

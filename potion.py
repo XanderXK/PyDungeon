@@ -1,14 +1,14 @@
-from pygame import SurfaceType
 import game_objects
 import image_helper
 import settings
+from pygame import SurfaceType
 
 
 class Potion:
     def __init__(self, position):
         game_objects.objects_to_draw.append(self)
         game_objects.objects_to_update.append(self)
-        self.image = image_helper.load_image("images/potion.png",settings.SCALE)
+        self.image = image_helper.load_image("images/potion.png", settings.SCALE)
         self.rect = self.image.get_rect()
         self.rect.center = position
 
