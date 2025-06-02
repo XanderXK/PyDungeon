@@ -12,7 +12,6 @@ from weapon import Weapon
 
 class Player:
     _is_flipped = False
-    _coins = 0
     _move_speed = 5
     _hp = 3
     _max_hp = 5
@@ -26,8 +25,7 @@ class Player:
         self.idle_animation = animation_creator.create_player_idle()
         self.run_animation = animation_creator.create_player_run()
         self.current_anim_frame = self.idle_animation.get_frame()
-        self.hp_text = screen_text.ScreenText(f"hp: {self._hp} / {self._max_hp}", (100, settings.SCREEN_HEIGHT - 35))
-        self.score_text = screen_text.ScreenText(f"score: {self._coins}", (250, settings.SCREEN_HEIGHT - 35))
+        self.hp_text = screen_text.ScreenText(f"hp: {self._hp} / {self._max_hp}", (75, settings.SCREEN_HEIGHT - 35))
         Weapon(self)
 
     def add_hp(self, amount):
